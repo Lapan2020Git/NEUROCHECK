@@ -1,0 +1,63 @@
+<script>
+// ... (mantenha o restante do código conforme seu arquivo original)
+
+function finishQuiz() {
+    showScreen('result');
+    const dataDimensions = [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100];
+    const dataIndividual = individualScores.map(score => (score/5)*100);
+
+    // Plugin para desenhar as Zonas de Risco no fundo
+    const bgZonesPlugin = {
+        id: 'bgZones',
+        beforeDraw: (chart) => {
+            const { ctx, scales: { r } } = chart;
+            const centerX = r.xCenter;
+            const centerY = r.yCenter;
+            const maxRadius = r.drawingArea;
+
+            const drawCircle = (radiusPercent, color) => {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, maxRadius * radiusPercent, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+            };
+
+            drawCircle(1, 'rgba(255, 0, 0, 0.25)');    // Zona Vermelha (Risco)
+            drawCircle(0.66, 'rgba(255, 255, 0, 0.2)'); // Zona Amarela (Atenção)
+            drawCircle(0.33, 'rgba(173, 216, 230, 0.4)'); // Zona Azul (Normal)
+        }
+    };
+
+    const commonOptions = {
+        scales: {
+            r: {
+                min: 0, max: 100,
+                ticks: { display: false },
+                grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                angleLines: { color: 'rgba(255, 255, 255, 0.3)' },
+                pointLabels: {
+                    color: '#ffffff', // Contraste máximo
+                    font: { size: 18, weight: 'bold' }, // Fonte aumentada
+                    padding: 15
+                }
+            }
+        },
+        plugins: { legend: { display: true, labels: { color: '#E0E1DD' } } }
+    };
+
+    // Renderização dos dois gráficos
+    new Chart(document.getElementById('radarChart'), {
+        type: 'radar', plugins: [bgZonesPlugin],
+        data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], 
+        datasets: [{ label: 'Dimensões', data: dataDimensions, backgroundColor: 'rgba(255, 255, 255, 0.6)', borderColor: '#fff' }] },
+        options: commonOptions
+    });
+
+    new Chart(document.getElementById('individualChart'), {
+        type: 'radar', plugins: [bgZonesPlugin],
+        data: { labels: questions.map(q => q.label), 
+        datasets: [{ label: 'Fatores Individuais', data: dataIndividual, backgroundColor: 'rgba(255, 255, 255, 0.6)', borderColor: '#fff' }] },
+        options: commonOptions
+    });
+}
+</script>

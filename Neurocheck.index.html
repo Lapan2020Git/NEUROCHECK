@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroCheck - Saúde Mental e Sensorial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --navy: #1B263B;
+            --creme: #E0E1DD;
+            --verde-musgo: #588157;
+            --verde-calma: #A3B18A;
+            --ouro: #B8926A;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--navy);
+            color: var(--creme);
+            font-family: 'Lexend', sans-serif;
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 5px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.8em; }
+        p { font-size: 1.2em; line-height: 1.6; }
+
+        .container {
+            max-width: 600px; margin: auto;
+            padding: 25px; width: 100%; box-sizing: border-box;
+            text-align: center;
+        }
+
+        .logo-img {
+            width: 100%; max-width: 250px;
+            border-radius: 50%; margin-bottom: 20px;
+            border: 3px solid var(--ouro);
+        }
+
+        .screen { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .btn-main {
+            background-color: var(--verde-musgo); color: white;
+            padding: 20px 30px; border: none; border-radius: 40px;
+            font-size: 1.3em; font-weight: 600; cursor: pointer;
+            margin-top: 20px; width: 100%; display: block;
+        }
+
+        .btn-sec {
+            background: none; border: 2px solid var(--creme);
+            color: var(--creme); padding: 15px 25px;
+            border-radius: 35px; font-size: 1.1em; cursor: pointer;
+            margin-top: 15px; width: 100%; display: block;
+        }
+
+        .info-card {
+            background: rgba(255,255,255,0.08);
+            padding: 22px; border-radius: 18px;
+            margin-bottom: 20px; text-align: left;
+            border-left: 6px solid var(--ouro);
+        }
+
+        .question-box { text-align: left; border-left: 6px solid var(--verde-musgo); padding-left: 20px; margin: 30px 0; }
+        .option-btn {
+            display: block; width: 100%; padding: 20px;
+            margin: 12px 0; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(224, 225, 221, 0.4);
+            color: var(--creme); border-radius: 15px;
+            font-size: 1.2em; text-align: left; cursor: pointer;
+        }
+
+        .chart-container { 
+            margin: 40px 0; padding: 20px 10px; 
+            background: rgba(255,255,255,0.03); 
+            border-radius: 15px;
+        }
+        .chart-label { color: var(--ouro); font-weight: bold; margin-bottom: 15px; font-size: 1.2em; text-transform: uppercase; }
+
+        #calm-room {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--verde-calma); z-index: 1000;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .pulse-circle {
+            width: 250px; height: 250px;
+            background: rgba(255,255,255,0.4); border-radius: 50%;
+            animation: pulse 10s infinite ease-in-out;
+            display: flex; align-items: center; justify-content: center;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.4); opacity: 0.6; } }
+        #breath-counter { font-size: 6em; font-weight: 900; color: var(--navy); }
+    </style>
+</head>
+<body>
+
+    <div id="home" class="container screen active">
+        <img src="logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+        <h1>NeuroCheck</h1>
+        <h2 style="color: var(--ouro);">Indicador de Saúde Mental</h2>
+        <p>Avalie sua Saúde Mental pelo Medidor de Sobrecarga Sensorial.</p>
+        <button class="btn-main" onclick="showScreen('edu')">Iniciar Jornada</button>
+        <button class="btn-sec" onclick="toggleCalmRoom(true)">Sala de Alívio</button>
+    </div>
+
+    <div id="edu" class="container screen">
+        <h2>Entendendo sua Mente</h2>
+        <div class="info-card">
+            <p>Nossa mente busca o equilíbrio (Alostase) como um pêndulo. Se o esforço sensorial for excessivo, pagamos "juros" em cansaço e "multas" em crises.</p>
+        </div>
+        <button class="btn-main" onclick="showScreen('quiz-prep')">Continuar</button>
+    </div>
+
+    <div id="quiz-prep" class="container screen">
+        <h2>Antes de Começar</h2>
+        <p style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; font-weight: 600;">
+            Responda espontaneamente. Esta avaliação revela como o seu sistema sensorial influencia sua saúde mental.
+        </p>
+        <button class="btn-main" onclick="startQuiz()">Estou Pronto</button>
+    </div>
+
+    <div id="quiz" class="container screen">
+        <div id="question-container"></div>
+    </div>
+
+    <div id="result" class="container screen">
+        <h2 id="result-title">Seu Resultado</h2>
+        
+        <div class="chart-container">
+            <div class="chart-label">Radar de Dimensões</div>
+            <canvas id="radarChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-label">Fatores Individuais (Todos)</div>
+            <canvas id="individualChart"></canvas>
+        </div>
+
+        <p id="result-text" style="padding: 15px; font-weight: bold; font-size: 1.4em;"></p>
+        <button class="btn-main" onclick="location.reload()">Finalizar (Reteste em 7 dias)</button>
+    </div>
+
+    <div id="calm-room">
+        <div class="pulse-circle"><div id="breath-counter">1</div></div>
+        <button class="btn-main" style="background:var(--navy); max-width: 200px;" onclick="toggleCalmRoom(false)">Sair</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Conforto com LUZ NATURAL?", axis: 0, label: "Luz Natural" },
+            { q: "Conforto com LUZ ARTIFICIAL?", axis: 0, label: "Luz Artificial" },
+            { q: "Percepção de FARÓIS à noite?", axis: 0, label: "Faróis" },
+            { q: "ENJÔO em movimento (carro)?", axis: 1, label: "Enjôo" },
+            { q: "Experiência com LEITURA?", axis: 1, label: "Leitura" },
+            { q: "Sensibilidade TÁTIL (etiquetas)?", axis: 2, label: "Tato" },
+            { q: "Seletividade de PALADAR?", axis: 2, label: "Paladar" },
+            { q: "Seletividade de OLFATO?", axis: 2, label: "Olfato" },
+            { q: "Sensibilidade a SONS?", axis: 2, label: "Audição" },
+            { q: "Reação a CORES ou PADRÕES?", axis: 0, label: "Cores" },
+            { q: "Frequência de ENXAQUECAS?", axis: 3, label: "Enxaqueca" },
+            { q: "Histórico FAMILIAR?", axis: 3, label: "Familiar" }
+        ];
+
+        let currentStep = 0, scores = [0,0,0,0], individualScores = [], totalScore = 0;
+        let radar1 = null, radar2 = null;
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function startQuiz() {
+            currentStep = 0; scores = [0,0,0,0]; individualScores = []; totalScore = 0;
+            showScreen('quiz');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentStep];
+            document.getElementById('question-container').innerHTML = `
+                <div class="question-box">
+                    <small style="color:var(--ouro);">PASSO ${currentStep + 1} DE 12</small>
+                    <h3>${q.q}</h3>
+                    <button class="option-btn" onclick="nextStep(0)">Nenhuma / Confortável</button>
+                    <button class="option-btn" onclick="nextStep(2)">Pouca / Razoável</button>
+                    <button class="option-btn" onclick="nextStep(5)">Muita / Desconfortável</button>
+                </div>`;
+        }
+
+        function nextStep(p) {
+            scores[questions[currentStep].axis] += p;
+            individualScores.push(p);
+            totalScore += p;
+            currentStep++;
+            if (currentStep < questions.length) renderQuestion(); else finishQuiz();
+        }
+
+        const bgZones = {
+            id: 'bgZones',
+            beforeDraw: (chart) => {
+                const { ctx, scales: { r } } = chart;
+                const centerX = r.xCenter, centerY = r.yCenter, area = r.drawingArea;
+                const draw = (pct, col) => {
+                    ctx.beginPath(); ctx.arc(centerX, centerY, area * pct, 0, 2 * Math.PI);
+                    ctx.fillStyle = col; ctx.fill();
+                };
+                draw(1, 'rgba(255, 0, 0, 0.3)');    // Vermelho (Risco)
+                draw(0.66, 'rgba(255, 255, 0, 0.25)'); // Amarelo (Atenção)
+                draw(0.33, 'rgba(0, 150, 255, 0.35)'); // Azul (Normal)
+            }
+        };
+
+        function finishQuiz() {
+            showScreen('result');
+            
+            if (radar1) radar1.destroy();
+            if (radar2) radar2.destroy();
+
+            const commonOptions = {
+                scales: {
+                    r: {
+                        min: 0, max: 100, ticks: { display: false },
+                        grid: { color: 'rgba(255,255,255,0.3)' },
+                        angleLines: { color: 'rgba(255,255,255,0.3)' },
+                        pointLabels: { color: '#ffffff', font: { size: 18, weight: 'bold' }, padding: 20 }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            };
+
+            radar1 = new Chart(document.getElementById('radarChart'), {
+                type: 'radar', plugins: [bgZones],
+                data: {
+                    labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'],
+                    datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 3 }]
+                },
+                options: commonOptions
+            });
+
+            radar2 = new Chart(document.getElementById('individualChart'), {
+                type: 'radar', plugins: [bgZones],
+                data: {
+                    labels: questions.map(q => q.label),
+                    datasets: [{ data: individualScores.map(s => (s/5)*100), backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 2 }]
+                },
+                options: commonOptions
+            });
+
+            document.getElementById('result-text').innerText = totalScore > 24 ? "Alta Probabilidade de Sobrecarga Sensorial." : "Sistema Sensorial em Equilíbrio.";
+        }
+
+        let audioCtx, noiseNode, bInt, bCount = 0;
+        function toggleCalmRoom(on) {
+            document.getElementById('calm-room').style.display = on ? 'flex' : 'none';
+            if(on) { bCount = 1; bInt = setInterval(() => { bCount++; document.getElementById('breath-counter').innerText = bCount; }, 10000); } 
+            else { clearInterval(bInt); }
+        }
+    </script>
+</body>
+</html>
