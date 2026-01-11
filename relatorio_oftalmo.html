@@ -4,32 +4,33 @@
     <meta charset="UTF-8">
     <title>Relatório NeuroCheck - Oftalmologia</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1B263B; margin: 40px; background: #f4f4f4; }
-        .document { background: white; padding: 50px; max-width: 800px; margin: auto; border-top: 10px solid #588157; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #588157; border-bottom: 2px solid #588157; padding-bottom: 10px; }
-        .highlight { font-weight: bold; color: #B8926A; }
-        .btn-print { background: #1B263B; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1B263B; padding: 40px; background: #f4f4f4; }
+        .document { background: white; padding: 50px; max-width: 800px; margin: auto; border-top: 10px solid #588157; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #588157; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .destaque { font-weight: bold; color: #B8926A; }
+        .btn-print { background: #1B263B; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
         @media print { .btn-print { display: none; } }
     </style>
 </head>
 <body>
     <div class="document">
         <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-        <h1>Relatório de Triagem Sensorial - NeuroCheck</h1>
+        <h1>Relatório de Triagem Sensorial</h1>
         <p><strong>Para:</strong> Especialista em Oftalmologia / Neurovisão</p>
-        <p>Este paciente realizou um rastreio funcional através da ferramenta <strong>NeuroCheck</strong>, apresentando escores que sugerem alta demanda de resposta alostática no sistema visual.</p>
+        
+        <p>Este paciente realizou um rastreio funcional através da ferramenta <strong>NeuroCheck</strong>. Os escores obtidos sugerem uma alta demanda de resposta alostática no sistema visual, compatível com quadros de Hiperexcitabilidade Cortical.</p>
         
         <h3>🔍 Observações de Rastreio:</h3>
         <ul>
-            <li><span class="highlight">Fotosensibilidade:</span> Resposta exacerbada a estímulos luminosos e padrões de contraste.</li>
-            <li><span class="highlight">Eficiência Visuomotora:</span> Sinais de instabilidade na fixação e fadiga durante tarefas de leitura.</li>
+            <li><span class="destaque">Fotosensibilidade:</span> Resposta exacerbada a estímulos luminosos e padrões de contraste.</li>
+            <li><span class="destaque">Eficiência Visuomotora:</span> Sinais de instabilidade na fixação e fadiga durante tarefas de leitura e acompanhamento visual.</li>
         </ul>
 
         <h3>⚕️ Sugestão Clínica:</h3>
-        <p>Avaliação funcional da visão, análise de sensibilidade ao contraste, flexibilidade acomodativa e verificação de hiperexcitabilidade cortical (considerar filtros espectrais ou prismas se indicado).</p>
+        <p>Recomenda-se avaliação funcional da visão, com foco em análise de sensibilidade ao contraste, flexibilidade acomodativa e verificação de sinais de <span class="destaque">Distúrbios Neurovisuais (DNV)</span>. Considerar a indicação de filtros espectrais ou prismas se necessário.</p>
         
         <br><br>
-        <p><em>Gerado eletronicamente pelo NeuroCheck - Indicador de Saúde Mental.</em></p>
+        <p style="font-size: 0.9em; color: #666;"><em>Gerado eletronicamente pelo NeuroCheck - Indicador de Saúde Mental e Sensorial.</em></p>
     </div>
 </body>
 </html>
