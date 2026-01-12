@@ -17,18 +17,25 @@
         .screen { display: none; animation: fadeIn 0.4s ease-in-out; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
         .btn-main { background-color: var(--verde-musgo); color: white; padding: 18px 25px; border: none; border-radius: 40px; font-size: 1.2em; font-weight: 600; cursor: pointer; margin-top: 15px; width: 100%; display: block; text-decoration: none; }
         .btn-sec { background: none; border: 2px solid var(--creme); color: var(--creme); padding: 12px 20px; border-radius: 35px; font-size: 1em; cursor: pointer; margin-top: 10px; width: 100%; display: block; text-decoration: none; }
+        
         .info-card { background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; border-left: 6px solid var(--ouro); }
         .question-box { text-align: left; border-left: 6px solid var(--verde-musgo); padding-left: 20px; margin: 30px 0; }
         .option-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(224, 225, 221, 0.3); color: var(--creme); border-radius: 12px; font-size: 1.1em; text-align: left; cursor: pointer; }
         .chart-container { margin: 30px 0; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; }
-        
-        /* ESTILO DO RODAPÉ INSTITUCIONAL */
+
+        /* RODAPÉ INSTITUCIONAL */
         .footer-credits { font-size: 0.85em; color: rgba(224, 225, 221, 0.7); padding: 30px 15px; border-top: 1px solid rgba(224, 225, 221, 0.1); background: rgba(0,0,0,0.1); line-height: 1.5; margin-top: 40px; }
         .footer-credits a { color: var(--ouro); text-decoration: none; font-weight: 600; }
-        
         .disclaimer { font-size: 0.8em; color: rgba(224, 225, 221, 0.5); margin: 20px 0; padding: 15px; border: 1px solid rgba(224, 225, 221, 0.1); border-radius: 10px; }
+
+        /* SALA DE ALÍVIO - AJUSTE DE Z-INDEX */
+        #calm-room { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--verde-calma); z-index: 9999; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        .pulse-circle { width: 220px; height: 220px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: pulse 10s infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.4); opacity: 0.6; } }
+        #breath-counter { font-size: 5em; font-weight: 900; color: var(--navy); }
     </style>
 </head>
 <body>
@@ -41,7 +48,6 @@
             <button class="btn-main" onclick="showScreen('quiz-prep')">🚀 Iniciar Jornada</button>
             <button class="btn-sec" onclick="showScreen('edu')">📚 Biblioteca de Informações</button>
             <button class="btn-sec" onclick="toggleCalmRoom(true)">🍃 Sala de Alívio</button>
-            
             <div class="disclaimer">
                 <strong>DISCLAIMER:</strong> O NeuroCheck é uma ferramenta de triagem funcional e educação sensorial. Os resultados não constituem diagnóstico médico.
             </div>
@@ -50,20 +56,33 @@
         <div id="edu" class="screen" style="text-align: left;">
             <h2>Biblioteca Técnica</h2>
             <div class="info-card">
-                <h3>📈 Carga Alostática</h3>
-                <p>O cérebro busca equilíbrio (Alostase). O esforço excessivo para processar luz, som ou movimento consome a energia vital da sua saúde mental.</p>
+                <h3>🧠 O Pêndulo Mental</h3>
+                <p>Nossa mente busca o equilíbrio (Alostase) como um pêndulo. Se o esforço sensorial for excessivo, pagamos "juros" em cansaço e "multas" em crises.</p>
             </div>
             <div class="info-card">
-                <h3>👁️ Neurovisão</h3>
-                <p>Diferente da acuidade visual simples, a Neurovisão analisa como o cérebro integra o que vemos com nossas emoções e equilíbrio.</p>
+                <h3>📈 Carga Alostática</h3>
+                <p>O cérebro busca estabilidade. O esforço constante para processar luz, som ou movimento consome energia que deveria sustentar sua saúde mental.</p>
+            </div>
+            <div class="info-card">
+                <h3>👁️ Neurovisão vs. Acuidade</h3>
+                <p>Ter "visão 20/20" mede apenas letras paradas (2% do campo). A Neurovisão estuda como o cérebro processa o mundo, movimento e contraste.</p>
+            </div>
+            <div class="info-card">
+                <h3>👁️ A Retina e o Cérebro</h3>
+                <p>A retina é tecido cerebral exteriorizado. Falhas no seu processamento funcional geram fadiga, irritabilidade e falta de concentração.</p>
+            </div>
+            <div class="info-card">
+                <h3>👶 Prevenção na Infância</h3>
+                <p>A visão precisa de acompanhamento em janelas críticas de plasticidade. Erros funcionais explicam muitos problemas de atenção e rendimento.</p>
             </div>
             <button class="btn-main" onclick="showScreen('home')">🏠 Menu Principal</button>
         </div>
 
         <div id="quiz-prep" class="screen">
-            <h2>Prepara-se</h2>
-            <p>Responda conforme sua sensação imediata de conforto ou esforço.</p>
-            <button class="btn-main" onclick="startQuiz()">Vamos Iniciar</button>
+            <h2>Prepare-se</h2>
+            <p>Responda espontaneamente. Explicaremos o significado clínico dos radares ao final do teste.</p>
+            <button class="btn-main" onclick="startQuiz()">Entendido, vamos lá</button>
+            <button class="btn-sec" onclick="showScreen('home')">🏠 Voltar</button>
         </div>
 
         <div id="quiz" class="screen">
@@ -72,22 +91,31 @@
 
         <div id="result" class="screen" style="text-align: left;">
             <h2 style="text-align: center;">Seu Radar Sensorial</h2>
-            <div class="chart-container"><canvas id="radarChart"></canvas></div>
-            <div class="chart-container"><canvas id="individualChart"></canvas></div>
+            <div class="chart-container">
+                <p style="text-align:center; font-size:0.8em;">MAPA DE EIXOS</p>
+                <canvas id="radarChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <p style="text-align:center; font-size:0.8em;">MAPA INDIVIDUAL</p>
+                <canvas id="individualChart"></canvas>
+            </div>
             
             <div class="info-card">
-                <h3>💡 Interpretação</h3>
+                <h3>💡 O que significa este Radar?</h3>
                 <p id="interpretation-text"></p>
             </div>
-
             <div class="info-card" style="border-left-color: var(--verde-musgo);">
-                <h3>🏥 Suporte Especializado</h3>
-                <p>Resultados em zonas de risco indicam hipervigilância do sistema nervoso. Recomendamos consulta com especialistas em Neurovisão.</p>
+                <h3>🏥 Recomendação Profissional</h3>
+                <p>Pontos em zonas amarelas ou vermelhas indicam hipervigilância. Recomenda-se consulta com especialistas em Neurovisão ou Neurologia.</p>
+            </div>
+            <div class="info-card">
+                <h3>📄 Utilidade dos Relatórios</h3>
+                <p>Os documentos abaixo traduzem suas respostas em termos clínicos para facilitar a comunicação com seu médico ou escola.</p>
             </div>
 
             <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 20px;"></div>
             
-            <button class="btn-main" onclick="location.reload()">🏠 Voltar ao Início</button>
+            <button class="btn-main" onclick="location.reload()">🏠 Finalizar e Voltar</button>
         </div>
     </div>
 
@@ -100,6 +128,7 @@
 
     <div id="calm-room">
         <div class="pulse-circle"><div id="breath-counter">1</div></div>
+        <p style="color: var(--navy); font-weight: bold; margin-top: 20px;">Respire no ritmo do círculo...</p>
         <button class="btn-main" style="background:var(--navy); max-width: 200px;" onclick="toggleCalmRoom(false)">Sair</button>
     </div>
 
@@ -167,10 +196,13 @@
             showScreen('result');
             const commonOptions = { scales: { r: { min: 0, max: 100, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.3)' }, angleLines: { color: 'rgba(255,255,255,0.3)' }, pointLabels: { color: '#ffffff', font: { size: 14, weight: 'bold' } } } }, plugins: { legend: { display: false } } };
 
+            if (radar1) radar1.destroy();
+            if (radar2) radar2.destroy();
+
             radar1 = new Chart(document.getElementById('radarChart'), { type: 'radar', plugins: [bgZones], data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 3 }] }, options: commonOptions });
             radar2 = new Chart(document.getElementById('individualChart'), { type: 'radar', plugins: [bgZones], data: { labels: questions.map(q => q.label), datasets: [{ data: individualScores.map(s => (s/5)*100), backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 2 }] }, options: commonOptions });
 
-            document.getElementById('interpretation-text').innerText = totalScore > 24 ? "Pontuações altas sugerem fadiga sensorial por hipervigilância cerebral." : "Seus resultados indicam equilíbrio no processamento sensorial.";
+            document.getElementById('interpretation-text').innerText = totalScore > 24 ? "Pontuações em zonas quentes indicam que seu cérebro gasta energia excessiva para filtrar estímulos, gerando fadiga mental." : "Seus resultados indicam um sistema sensorial em equilíbrio dinâmico.";
             
             document.getElementById('download-area').innerHTML = `
                 <p style="font-size: 0.9em; color: var(--ouro);">BAIXE SEUS RELATÓRIOS:</p>
