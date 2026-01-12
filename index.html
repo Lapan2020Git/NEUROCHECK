@@ -34,34 +34,39 @@
 </head>
 <body>
 
-<div id="home" class="container screen active">
-    <img src="logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
-    <h1>NeuroCheck</h1>
-    <p><b>Indicador de Saúde Mental</b><br>Avalie sua Sobrecarga Sensorial</p>
-    
-    <button class="btn-main" onclick="showScreen('quiz-prep')">🚀 Iniciar Jornada</button>
-    
-    <button class="btn-sec" onclick="showScreen('edu')">📚 Biblioteca de Informações</button>
-    
-    <button class="btn-sec" onclick="toggleCalmRoom(true)">🍃 Sala de Alívio</button>
-</div>
+    <div id="home" class="container screen active">
+        <img src="Logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+        <h1>NeuroCheck</h1>
+        <p><b>Indicador de Saúde Mental</b><br>Avalie sua Sobrecarga Sensorial</p>
+        <button class="btn-main" onclick="showScreen('quiz-prep')">🚀 Iniciar Avaliação</button>
+        <button class="btn-sec" onclick="showScreen('edu')">📚 Biblioteca de Informações</button>
+        <button class="btn-sec" onclick="toggleCalmRoom(true)">🍃 Sala de Alívio</button>
+    </div>
 
-    <div id="edu" class="container screen">
-        <h2>Educação Sensorial</h2>
+    <div id="edu" class="container screen" style="text-align: left;">
+        <h2>Biblioteca NeuroCheck</h2>
         <div class="info-card">
-            <h3>📈 O Pêndulo Mental</h3>
-            <p>Nossa mente busca o equilíbrio (Alostase). Se o esforço sensorial for excessivo, o sistema entra em colapso.</p>
+            <h3>🧠 O que é Neurovisão?</h3>
+            <p>São as "Neurociências Aplicadas à Visão". Ver não é apenas captar imagens; é um processo cerebral complexo que envolve circuitos neurológicos que regulam funções fisiológicas, comportamento e cognição.</p>
         </div>
         <div class="info-card">
-            <h3>💰 Juros Biológicos</h3>
-            <p>Processar estímulos custa energia. Ignorar seus limites gera fadiga crônica e crises de sobrecarga.</p>
+            <h3>⚠️ Limitações do 20/20</h3>
+            <p>O teste de Snellen mede apenas 2% do campo visual total. Ele falha em avaliar aspectos cruciais como o processamento de movimentos, percepção de contrastes rápidos e a integração visual com outros sentidos (audição e propriocepção).</p>
+        </div>
+        <div class="info-card">
+            <h3>👁️ A Retina e o Cérebro</h3>
+            <p>A retina é frequentemente descrita como "uma parte do cérebro que se exteriorizou". Problemas funcionais aqui podem gerar fadiga crônica, irritabilidade e dificuldades de concentração.</p>
+        </div>
+        <div class="info-card">
+            <h3>👶 Prevenção na Infância</h3>
+            <p>A visão precisa de acompanhamento regular durante as janelas críticas de plasticidade neural, especialmente até os 8 anos. Erros refrativos não detectados explicam boa parte das queixas de atenção e rendimento escolar.</p>
         </div>
         <button class="btn-main" onclick="showScreen('home')">🏠 Menu Principal</button>
     </div>
 
     <div id="quiz-prep" class="container screen">
-        <h2>Prepara-se</h2>
-        <p>Responda com sinceridade sobre sua rotina sensorial.</p>
+        <h2>Prepare-se</h2>
+        <p>Responda com espontaneidade. Esta avaliação revela como seu sistema sensorial influencia sua saúde mental.</p>
         <button class="btn-main" onclick="startQuiz()">Estou Pronto</button>
         <button class="btn-sec" onclick="showScreen('home')">🏠 Voltar</button>
     </div>
@@ -71,23 +76,27 @@
     </div>
 
     <div id="result" class="container screen">
-        <h2>Resultado</h2>
-        <div class="chart-container"><canvas id="radarChart"></canvas></div>
-        <div class="chart-container"><canvas id="individualChart"></canvas></div>
-        <div id="result-text" style="padding: 15px; font-weight: bold;"></div>
-        <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center;"></div>
-        
-        <button class="btn-main" onclick="showScreen('home')" style="background-color: var(--verde-musgo);">🏠 Voltar ao Menu Principal</button>
+        <h2>Seu Radar Sensorial</h2>
+        <div class="chart-container">
+            <p><small>RESUMO POR EIXOS</small></p>
+            <canvas id="radarChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <p><small>ANÁLISE INDIVIDUAL POR PERGUNTA</small></p>
+            <canvas id="individualChart"></canvas>
+        </div>
+        <div id="result-text" style="padding: 15px; font-weight: bold; font-size: 1.3em;"></div>
+        <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 20px;"></div>
+        <button class="btn-main" onclick="location.reload()">🏠 Nova Avaliação</button>
     </div>
 
     <div id="calm-room">
         <div class="pulse-circle"><div id="breath-counter">1</div></div>
         <p style="color: var(--navy); font-weight: bold; margin-top: 20px;">Respire no ritmo do círculo...</p>
-        <button class="btn-main" style="background:var(--navy); max-width: 200px;" onclick="toggleCalmRoom(false)">🏠 Sair para o Menu</button>
+        <button class="btn-main" style="background:var(--navy); max-width: 200px;" onclick="toggleCalmRoom(false)">Sair</button>
     </div>
 
     <script>
-        // ... (Script do Quiz e Gráficos mantidos conforme sua especificação)
         const questions = [
             { q: "Conforto com LUZ NATURAL?", axis: 0, label: "Luz Natural" },
             { q: "Conforto com LUZ ARTIFICIAL?", axis: 0, label: "Luz Artificial" },
@@ -121,7 +130,7 @@
             const q = questions[currentStep];
             document.getElementById('question-container').innerHTML = `
                 <div class="question-box">
-                    <small>PASSO ${currentStep + 1} DE 12</small>
+                    <small style="color:var(--ouro);">PASSO ${currentStep + 1} DE 12</small>
                     <h3>${q.q}</h3>
                     <button class="option-btn" onclick="nextStep(0)">Confortável</button>
                     <button class="option-btn" onclick="nextStep(2)">Razoável</button>
@@ -137,34 +146,44 @@
             if (currentStep < questions.length) renderQuestion(); else finishQuiz();
         }
 
+        // PLUGIN PARA AS ZONAS COLORIDAS (RECUPERADO)
+        const bgZones = {
+            id: 'bgZones',
+            beforeDraw: (chart) => {
+                const { ctx, scales: { r } } = chart;
+                const centerX = r.xCenter, centerY = r.yCenter, area = r.drawingArea;
+                const draw = (pct, col) => { ctx.beginPath(); ctx.arc(centerX, centerY, area * pct, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); };
+                draw(1, 'rgba(255, 0, 0, 0.3)');    // Vermelho (Risco)
+                draw(0.66, 'rgba(255, 255, 0, 0.25)'); // Amarelo (Atenção)
+                draw(0.33, 'rgba(0, 150, 255, 0.35)'); // Azul (Equilíbrio)
+            }
+        };
+
         function finishQuiz() {
             showScreen('result');
             const commonOptions = { scales: { r: { min: 0, max: 100, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.3)' }, angleLines: { color: 'rgba(255,255,255,0.3)' }, pointLabels: { color: '#ffffff', font: { size: 14, weight: 'bold' } } } }, plugins: { legend: { display: false } } };
 
             if (radar1) radar1.destroy();
-            radar1 = new Chart(document.getElementById('radarChart'), { type: 'radar', data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff' }] }, options: commonOptions });
+            if (radar2) radar2.destroy();
+
+            radar1 = new Chart(document.getElementById('radarChart'), { type: 'radar', plugins: [bgZones], data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 3 }] }, options: commonOptions });
+            radar2 = new Chart(document.getElementById('individualChart'), { type: 'radar', plugins: [bgZones], data: { labels: questions.map(q => q.label), datasets: [{ data: individualScores.map(s => (s/5)*100), backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 2 }] }, options: commonOptions });
 
             document.getElementById('result-text').innerText = totalScore > 24 ? "ALTA PROBABILIDADE DE SOBRECARGA" : "SISTEMA EM EQUILÍBRIO";
             
-            // ATUALIZAÇÃO DOS LINKS PARA NOMES MINÚSCULOS CONFORME SEU REPOSITÓRIO
             document.getElementById('download-area').innerHTML = `
-                <p style="font-size: 0.9em; color: var(--ouro); margin-bottom: 10px;">BAIXE OS RELATÓRIOS:</p>
-                <a href="relatorio_oftalmo.html" target="_blank" class="btn-sec">📄 Relatório Oftalmo</a>
-                <a href="relatorio_neurologista.html" target="_blank" class="btn-sec">📄 Relatório Neuro</a>
-                <a href="relatorio_professor.html" target="_blank" class="btn-sec">📄 Relatório Pedagogo</a>
+                <p style="font-size: 0.9em; color: var(--ouro); margin-bottom: 5px;">BAIXE OS RELATÓRIOS FORMATADOS:</p>
+                <a href="relatorio_oftalmo.html" target="_blank" class="btn-sec">Relatório Oftalmo</a>
+                <a href="relatorio_neurologista.html" target="_blank" class="btn-sec">Relatório Neuro</a>
+                <a href="relatorio_professor.html" target="_blank" class="btn-sec">Relatório Pedagogo</a>
             `;
         }
 
-        // LÓGICA DA SALA DE ALÍVIO
         let bInt, bCount = 0;
         function toggleCalmRoom(on) {
             document.getElementById('calm-room').style.display = on ? 'flex' : 'none';
-            if(on) { 
-                bCount = 1; 
-                bInt = setInterval(() => { bCount++; document.getElementById('breath-counter').innerText = bCount; }, 10000); 
-            } else { 
-                clearInterval(bInt); 
-            }
+            if(on) { bCount = 1; bInt = setInterval(() => { bCount++; document.getElementById('breath-counter').innerText = bCount; }, 10000); } 
+            else { clearInterval(bInt); }
         }
     </script>
 </body>
