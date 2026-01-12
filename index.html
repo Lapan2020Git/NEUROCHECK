@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
         body { margin: 0; padding: 0; background-color: var(--navy); color: var(--creme); font-family: 'Lexend', sans-serif; min-height: 100vh; text-align: center; display: flex; flex-direction: column; }
         h1 { font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 5px; }
         h2 { font-family: 'Playfair Display', serif; font-size: 1.8em; color: var(--ouro); margin-top: 20px; }
-        p { font-size: 1.1em; line-height: 1.6; }
         .container { max-width: 600px; margin: auto; padding: 25px; width: 100%; box-sizing: border-box; flex: 1; }
         .logo-img { width: 100%; max-width: 200px; border-radius: 50%; margin-bottom: 15px; border: 3px solid var(--ouro); }
         .screen { display: none; animation: fadeIn 0.4s ease-in-out; }
@@ -22,10 +21,7 @@
         .btn-sec { background: none; border: 2px solid var(--creme); color: var(--creme); padding: 12px 20px; border-radius: 35px; font-size: 1em; cursor: pointer; margin-top: 10px; width: 100%; display: block; text-decoration: none; }
         
         .info-card { background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: left; border-left: 6px solid var(--ouro); }
-        
-        /* BARRA LATERAL DA PERGUNTA - COR SERÁ SOBREPOSTA VIA JS */
         .question-box { text-align: left; border-left: 8px solid var(--verde-musgo); padding-left: 20px; margin: 30px 0; transition: border-color 0.4s ease; }
-        
         .option-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(224, 225, 221, 0.3); color: var(--creme); border-radius: 12px; font-size: 1.1em; text-align: left; cursor: pointer; }
         .chart-container { margin: 30px 0; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; }
 
@@ -56,46 +52,39 @@
 
         <div id="edu" class="screen" style="text-align: left;">
             <h2>Biblioteca Técnica</h2>
-            <div class="info-card"><h3>🧠 O Pêndulo Mental</h3><p>Nossa mente busca o equilíbrio (Alostase). Se o esforço sensorial for excessivo, pagamos "juros" em fadiga.</p></div>
-            <div class="info-card"><h3>📈 Carga Alostática</h3><p>O cérebro gasta energia vital para processar luz, som ou movimento se os filtros falharem.</p></div>
-            <div class="info-card"><h3>👁️ Neurovisão</h3><p>Ter "visão 20/20" mede apenas nitidez central. A Neurovisão avalia como o cérebro processa o mundo em movimento.</p></div>
-            <div class="info-card"><h3>👁️ Retina e Cérebro</h3><p>A retina é tecido cerebral. Falhas funcionais geram fadiga, irritabilidade e falta de concentração.</p></div>
-            <div class="info-card"><h3>👶 Prevenção</h3><p>Acompanhar janelas de plasticidade até os 8 anos evita problemas graves de aprendizado.</p></div>
+            <div class="info-card"><h3>🧠 O Pêndulo Mental</h3><p>A mente procura o equilíbrio (Alostase). Se o esforço sensorial for excessivo, o sistema entra em sobrecarga.</p></div>
+            <div class="info-card"><h3>👁️ Neurovisão</h3><p>Ver não é apenas nitidez. É como o cérebro processa movimento, luz e profundidade.</p></div>
             <button class="btn-main" onclick="showScreen('home')">🏠 Menu Principal</button>
         </div>
 
         <div id="quiz-prep" class="screen">
-            <h2>Pronto para iniciar?</h2>
-            <p>A variação de cores nas barras laterais ajuda a sinalizar a mudança de cada pergunta. Responda conforme sua sensação.</p>
+            <h2>Pronto para começar?</h2>
+            <p>Responda conforme a sua sensação de esforço. As cores das barras laterais mudarão a cada passo.</p>
             <button class="btn-main" onclick="startQuiz()">Sim, começar</button>
         </div>
 
-        <div id="quiz" class="screen">
-            <div id="question-container"></div>
-        </div>
+        <div id="quiz" class="screen"><div id="question-container"></div></div>
 
         <div id="result" class="screen" style="text-align: left;">
-            <h2 style="text-align: center;">Análise de Sobrecarga</h2>
-            <div class="chart-container"><p style="text-align:center; font-size:0.8em;">RADAR DE EIXOS</p><canvas id="radarChart"></canvas></div>
-            <div class="chart-container"><p style="text-align:center; font-size:0.8em;">MAPA INDIVIDUAL</p><canvas id="individualChart"></canvas></div>
-            
-            <div class="info-card"><h3>💡 O que significa?</h3><p id="interpretation-text"></p></div>
-            <div class="info-card" style="border-left-color: var(--verde-musgo);"><h3>🏥 Recomendação</h3><p>Resultados em áreas amarelas ou vermelhas indicam necessidade de consulta com especialistas em Neurovisão.</p></div>
-
+            <h2 style="text-align: center;">Radar de Sobrecarga</h2>
+            <div class="chart-container"><canvas id="radarChart"></canvas></div>
+            <div class="chart-container"><canvas id="individualChart"></canvas></div>
+            <div class="info-card"><h3>💡 Significado</h3><p id="interpretation-text"></p></div>
             <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 20px;"></div>
             <button class="btn-main" onclick="location.reload()">🏠 Nova Avaliação</button>
         </div>
     </div>
 
     <div class="footer-credits">
-        NEUROCHECK desenvolvido por <br>
+        NEUROCHECK desenvolvido pelo <br>
         <strong><a href="https://lapan.com.br" target="_blank">LAPAN - Lab. de Neurociências Aplicadas à Visão</a></strong> e 
         <strong><a href="https://holhos.com.br" target="_blank">Dep. de Neurovisão H.Olhos</a></strong>
     </div>
 
     <div id="calm-room">
+        <audio id="zen-audio" loop src="https://assets.mixkit.co/music/preview/mixkit-zen-meditation-431.mp3"></audio>
         <div class="pulse-circle"><div id="breath-counter">1</div></div>
-        <p style="color: var(--navy); font-weight: bold; margin-top: 20px;">Biofeedback Respiratório</p>
+        <p style="color: var(--navy); font-weight: bold; margin-top: 20px;">Relaxe e respire...</p>
         <button class="btn-main" style="background:var(--navy); max-width: 200px;" onclick="toggleCalmRoom(false)">Sair</button>
     </div>
 
@@ -115,7 +104,6 @@
             { q: "Histórico FAMILIAR?", axis: 3, label: "Familiar" }
         ];
 
-        // PALETA DINÂMICA PARA AJUDA NA VIA MAGNOCELULAR
         const stepColors = ['#588157', '#B8926A', '#A3B18A', '#1B263B', '#6290C3', '#C1121F', '#FFB703', '#219EBC', '#023047', '#8E9AAF', '#BC4749', '#D4A373'];
 
         let currentStep = 0, scores = [0,0,0,0], individualScores = [], totalScore = 0;
@@ -134,7 +122,7 @@
 
         function renderQuestion() {
             const q = questions[currentStep];
-            const color = stepColors[currentStep]; // Seleciona a cor única para esta pergunta
+            const color = stepColors[currentStep];
             document.getElementById('question-container').innerHTML = `
                 <div class="question-box" style="border-left-color: ${color}">
                     <small style="color:${color}; font-weight: bold;">PASSO ${currentStep + 1} DE 12</small>
@@ -166,25 +154,30 @@
         function finishQuiz() {
             showScreen('result');
             const commonOptions = { scales: { r: { min: 0, max: 100, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.3)' }, angleLines: { color: 'rgba(255,255,255,0.3)' }, pointLabels: { color: '#ffffff', font: { size: 14, weight: 'bold' } } } }, plugins: { legend: { display: false } } };
-
+            if (radar1) radar1.destroy();
+            if (radar2) radar2.destroy();
             radar1 = new Chart(document.getElementById('radarChart'), { type: 'radar', plugins: [bgZones], data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 3 }] }, options: commonOptions });
             radar2 = new Chart(document.getElementById('individualChart'), { type: 'radar', plugins: [bgZones], data: { labels: questions.map(q => q.label), datasets: [{ data: individualScores.map(s => (s/5)*100), backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 2 }] }, options: commonOptions });
-
-            document.getElementById('interpretation-text').innerText = totalScore > 24 ? "Os pontos nas zonas quentes mostram alta carga alostática sensorial." : "Seu sistema apresenta equilíbrio funcional nos eixos avaliados.";
-            
+            document.getElementById('interpretation-text').innerText = totalScore > 24 ? "Sinais de sobrecarga detetados." : "Sistema em equilíbrio.";
             document.getElementById('download-area').innerHTML = `
-                <p style="font-size: 0.9em; color: var(--ouro);">BAIXE OS RELATÓRIOS:</p>
-                <a href="relatorio_oftalmo.html" target="_blank" class="btn-sec" style="width: 90%;">📄 Para Oftalmologista</a>
-                <a href="relatorio_neurologista.html" target="_blank" class="btn-sec" style="width: 90%;">📄 Para Neurologista</a>
-                <a href="relatorio_professor.html" target="_blank" class="btn-sec" style="width: 90%;">📄 Para Escola/Professor</a>
+                <a href="relatorio_oftalmo.html" target="_blank" class="btn-sec">📄 Relatório Oftalmo</a>
+                <a href="relatorio_neurologista.html" target="_blank" class="btn-sec">📄 Relatório Neuro</a>
+                <a href="relatorio_professor.html" target="_blank" class="btn-sec">📄 Relatório Escola</a>
             `;
         }
 
-        let bInt, bCount = 0;
         function toggleCalmRoom(on) {
+            const audio = document.getElementById('zen-audio');
             document.getElementById('calm-room').style.display = on ? 'flex' : 'none';
-            if(on) { bCount = 1; bInt = setInterval(() => { bCount++; document.getElementById('breath-counter').innerText = bCount; }, 10000); } 
-            else { clearInterval(bInt); }
+            if(on) { 
+                audio.play(); 
+                bCount = 1; 
+                bInt = setInterval(() => { bCount++; document.getElementById('breath-counter').innerText = bCount; }, 10000); 
+            } else { 
+                audio.pause(); 
+                audio.currentTime = 0; 
+                clearInterval(bInt); 
+            }
         }
     </script>
 </body>
