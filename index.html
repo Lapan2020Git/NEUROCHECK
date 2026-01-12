@@ -8,11 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root { --navy: #1B263B; --creme: #E0E1DD; --verde-musgo: #588157; --verde-calma: #A3B18A; --ouro: #B8926A; }
-        body { margin: 0; padding: 0; background-color: var(--navy); color: var(--creme); font-family: 'Lexend', sans-serif; min-height: 100vh; text-align: center; }
+        body { margin: 0; padding: 0; background-color: var(--navy); color: var(--creme); font-family: 'Lexend', sans-serif; min-height: 100vh; text-align: center; display: flex; flex-direction: column; }
         h1 { font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 5px; }
         h2 { font-family: 'Playfair Display', serif; font-size: 1.8em; color: var(--ouro); margin-top: 20px; }
         p { font-size: 1.1em; line-height: 1.6; }
-        .container { max-width: 600px; margin: auto; padding: 25px; width: 100%; box-sizing: border-box; }
+        .container { max-width: 600px; margin: auto; padding: 25px; width: 100%; box-sizing: border-box; flex: 1; }
         .logo-img { width: 100%; max-width: 200px; border-radius: 50%; margin-bottom: 15px; border: 3px solid var(--ouro); }
         .screen { display: none; animation: fadeIn 0.4s ease-in-out; }
         .active { display: block; }
@@ -23,75 +23,79 @@
         .question-box { text-align: left; border-left: 6px solid var(--verde-musgo); padding-left: 20px; margin: 30px 0; }
         .option-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(224, 225, 221, 0.3); color: var(--creme); border-radius: 12px; font-size: 1.1em; text-align: left; cursor: pointer; }
         .chart-container { margin: 30px 0; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; }
-        .disclaimer { font-size: 0.8em; color: rgba(224, 225, 221, 0.6); margin-top: 40px; padding: 20px; border-top: 1px solid rgba(224, 225, 221, 0.2); }
+        
+        /* ESTILO DO RODAPÉ INSTITUCIONAL */
+        .footer-credits { font-size: 0.85em; color: rgba(224, 225, 221, 0.7); padding: 30px 15px; border-top: 1px solid rgba(224, 225, 221, 0.1); background: rgba(0,0,0,0.1); line-height: 1.5; margin-top: 40px; }
+        .footer-credits a { color: var(--ouro); text-decoration: none; font-weight: 600; }
+        
+        .disclaimer { font-size: 0.8em; color: rgba(224, 225, 221, 0.5); margin: 20px 0; padding: 15px; border: 1px solid rgba(224, 225, 221, 0.1); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="home" class="container screen active">
-        <img src="Logo.jpg" alt="Logo" class="logo-img" onerror="this.src='logo.jpg'; this.onerror=null;">
-        <h1>NeuroCheck</h1>
-        <p><b>Indicador de Saúde Mental e Sensorial</b><br>Avalie sua Sobrecarga Biológica</p>
-        <button class="btn-main" onclick="showScreen('quiz-prep')">🚀 Iniciar Jornada</button>
-        <button class="btn-sec" onclick="showScreen('edu')">📚 Biblioteca de Informações</button>
-        <button class="btn-sec" onclick="toggleCalmRoom(true)">🍃 Sala de Alívio</button>
-        
-        <div class="disclaimer">
-            <strong>DISCLAIMER:</strong> O NeuroCheck é uma ferramenta de triagem funcional e educação sensorial. Os resultados não constituem diagnóstico médico. Esta ferramenta serve para identificar sinais de alerta que devem ser validados por profissionais especializados.
+    <div class="container">
+        <div id="home" class="screen active">
+            <img src="Logo.jpg" alt="Logo" class="logo-img" onerror="this.src='logo.jpg'; this.onerror=null;">
+            <h1>NeuroCheck</h1>
+            <p><b>Indicador de Saúde Mental e Sensorial</b><br>Avalie sua Sobrecarga Biológica</p>
+            <button class="btn-main" onclick="showScreen('quiz-prep')">🚀 Iniciar Jornada</button>
+            <button class="btn-sec" onclick="showScreen('edu')">📚 Biblioteca de Informações</button>
+            <button class="btn-sec" onclick="toggleCalmRoom(true)">🍃 Sala de Alívio</button>
+            
+            <div class="disclaimer">
+                <strong>DISCLAIMER:</strong> O NeuroCheck é uma ferramenta de triagem funcional e educação sensorial. Os resultados não constituem diagnóstico médico.
+            </div>
+        </div>
+
+        <div id="edu" class="screen" style="text-align: left;">
+            <h2>Biblioteca Técnica</h2>
+            <div class="info-card">
+                <h3>📈 Carga Alostática</h3>
+                <p>O cérebro busca equilíbrio (Alostase). O esforço excessivo para processar luz, som ou movimento consome a energia vital da sua saúde mental.</p>
+            </div>
+            <div class="info-card">
+                <h3>👁️ Neurovisão</h3>
+                <p>Diferente da acuidade visual simples, a Neurovisão analisa como o cérebro integra o que vemos com nossas emoções e equilíbrio.</p>
+            </div>
+            <button class="btn-main" onclick="showScreen('home')">🏠 Menu Principal</button>
+        </div>
+
+        <div id="quiz-prep" class="screen">
+            <h2>Prepara-se</h2>
+            <p>Responda conforme sua sensação imediata de conforto ou esforço.</p>
+            <button class="btn-main" onclick="startQuiz()">Vamos Iniciar</button>
+        </div>
+
+        <div id="quiz" class="screen">
+            <div id="question-container"></div>
+        </div>
+
+        <div id="result" class="screen" style="text-align: left;">
+            <h2 style="text-align: center;">Seu Radar Sensorial</h2>
+            <div class="chart-container"><canvas id="radarChart"></canvas></div>
+            <div class="chart-container"><canvas id="individualChart"></canvas></div>
+            
+            <div class="info-card">
+                <h3>💡 Interpretação</h3>
+                <p id="interpretation-text"></p>
+            </div>
+
+            <div class="info-card" style="border-left-color: var(--verde-musgo);">
+                <h3>🏥 Suporte Especializado</h3>
+                <p>Resultados em zonas de risco indicam hipervigilância do sistema nervoso. Recomendamos consulta com especialistas em Neurovisão.</p>
+            </div>
+
+            <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 20px;"></div>
+            
+            <button class="btn-main" onclick="location.reload()">🏠 Voltar ao Início</button>
         </div>
     </div>
 
-    <div id="edu" class="container screen" style="text-align: left;">
-        <h2>Biblioteca Técnica</h2>
-        <div class="info-card">
-            <h3>📈 Carga Alostática</h3>
-            <p>Seu cérebro busca equilíbrio (Alostase). Quando o ambiente exige esforço excessivo para processar luz, som ou movimento, você gasta energia que deveria ser usada na sua saúde mental.</p>
-        </div>
-        <div class="info-card">
-            <h3>👁️ Neurovisão vs. Acuidade</h3>
-            <p>Ter "visão 20/20" significa apenas que seu olho vê letras paradas. A Neurovisão estuda como seu cérebro processa o mundo em movimento. Muitas crises de ansiedade nascem de um sistema visual sobrecarregado.</p>
-        </div>
-        <div class="info-card">
-            <h3>👨‍⚕️ O Papel dos Especialistas</h3>
-            <p>Problemas sensoriais são interdisciplinares. O Oftalmologista cuida da entrada da luz; o Neurologista da interpretação do sinal; e o Pedagogo das barreiras que isso cria no aprendizado.</p>
-        </div>
-        <button class="btn-main" onclick="showScreen('home')">🏠 Menu Principal</button>
-    </div>
-
-    <div id="quiz-prep" class="container screen">
-        <h2>Como responder?</h2>
-        <p>Não pense muito. Responda com base na sua sensação imediata de conforto ou desconforto. Ao final, explicaremos o significado clínico dos seus resultados.</p>
-        <button class="btn-main" onclick="startQuiz()">Entendido, vamos lá</button>
-        <button class="btn-sec" onclick="showScreen('home')">🏠 Voltar</button>
-    </div>
-
-    <div id="quiz" class="container screen">
-        <div id="question-container"></div>
-    </div>
-
-    <div id="result" class="container screen" style="text-align: left;">
-        <h2 style="text-align: center;">Análise do seu Sistema</h2>
-        <div class="chart-container"><canvas id="radarChart"></canvas></div>
-        <div class="chart-container"><canvas id="individualChart"></canvas></div>
-        
-        <div class="info-card">
-            <h3>💡 O que significa este Radar?</h3>
-            <p id="interpretation-text"></p>
-        </div>
-
-        <div class="info-card" style="border-left-color: var(--verde-musgo);">
-            <h3>🏥 Recomendação Profissional</h3>
-            <p>Se seus pontos atingiram as zonas amarela ou vermelha, seu sistema nervoso está em <strong>hipervigilância</strong>. É fundamental procurar um especialista em Neurovisão ou Neurologia para validar estes sinais.</p>
-        </div>
-
-        <div class="info-card">
-            <h3>📄 Utilidade dos Relatórios</h3>
-            <p>Abaixo, disponibilizamos relatórios técnicos. Eles traduzem suas respostas em termos clínicos (como Hiperexcitabilidade Cortical e Carga Alostática) para que seu médico ou o professor do seu filho entendam exatamente que tipo de suporte você precisa.</p>
-        </div>
-
-        <div id="download-area" style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 20px;"></div>
-        
-        <button class="btn-main" onclick="location.reload()">🏠 Finalizar e Voltar ao Início</button>
+    <div class="footer-credits">
+        NEUROCHECK foi desenvolvido pelo <br>
+        <strong><a href="https://lapan.com.br" target="_blank">LAPAN - Laboratório de Neurociências Aplicadas à Visão</a></strong><br>
+        (LAPAN.com.br) e pelo <br>
+        <strong>Dep. de Neurovisão do <a href="https://holhos.com.br" target="_blank">Holhos.com.br</a></strong>
     </div>
 
     <div id="calm-room">
@@ -104,13 +108,13 @@
             { q: "Conforto com LUZ NATURAL?", axis: 0, label: "Luz Natural" },
             { q: "Conforto com LUZ ARTIFICIAL?", axis: 0, label: "Luz Artificial" },
             { q: "Percepção de FARÓIS à noite?", axis: 0, label: "Faróis" },
-            { q: "ENJÔO em movimento (carro)?", axis: 1, label: "Enjôo" },
+            { q: "ENJÔO em movimento?", axis: 1, label: "Enjôo" },
             { q: "Experiência com LEITURA?", axis: 1, label: "Leitura" },
-            { q: "Sensibilidade TÁTIL (etiquetas)?", axis: 2, label: "Tato" },
+            { q: "Sensibilidade TÁTIL?", axis: 2, label: "Tato" },
             { q: "Seletividade de PALADAR?", axis: 2, label: "Paladar" },
             { q: "Seletividade de OLFATO?", axis: 2, label: "Olfato" },
             { q: "Sensibilidade a SONS?", axis: 2, label: "Audição" },
-            { q: "Reação a CORES ou PADRÕES?", axis: 0, label: "Cores" },
+            { q: "Reação a CORES/PADRÕES?", axis: 0, label: "Cores" },
             { q: "Frequência de ENXAQUECAS?", axis: 3, label: "Enxaqueca" },
             { q: "Histórico FAMILIAR?", axis: 3, label: "Familiar" }
         ];
@@ -166,8 +170,7 @@
             radar1 = new Chart(document.getElementById('radarChart'), { type: 'radar', plugins: [bgZones], data: { labels: ['Fotosensibilidade', 'Visuomotor', 'Filtros', 'Biológico'], datasets: [{ data: [(scores[0]/20)*100, (scores[1]/10)*100, (scores[2]/20)*100, (scores[3]/10)*100], backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 3 }] }, options: commonOptions });
             radar2 = new Chart(document.getElementById('individualChart'), { type: 'radar', plugins: [bgZones], data: { labels: questions.map(q => q.label), datasets: [{ data: individualScores.map(s => (s/5)*100), backgroundColor: 'rgba(255,255,255,0.7)', borderColor: '#fff', borderWidth: 2 }] }, options: commonOptions });
 
-            const interp = totalScore > 24 ? "Os pontos na zona vermelha/amarela indicam que seu cérebro está gastando energia excessiva para filtrar estímulos. Isso é a 'Sobrecarga Sensorial', que gera cansaço mental e físico." : "Seus resultados estão majoritariamente na zona azul, indicando um sistema em equilíbrio dinâmico com o ambiente.";
-            document.getElementById('interpretation-text').innerText = interp;
+            document.getElementById('interpretation-text').innerText = totalScore > 24 ? "Pontuações altas sugerem fadiga sensorial por hipervigilância cerebral." : "Seus resultados indicam equilíbrio no processamento sensorial.";
             
             document.getElementById('download-area').innerHTML = `
                 <p style="font-size: 0.9em; color: var(--ouro);">BAIXE SEUS RELATÓRIOS:</p>
